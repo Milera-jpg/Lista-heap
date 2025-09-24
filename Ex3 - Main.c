@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "funcao.h"
+#include "heap.h"
 
 int main()
 {
