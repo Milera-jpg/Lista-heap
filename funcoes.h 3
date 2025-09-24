@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void troca(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void minHeapify(int arranjo[], int tamanho, int i) {
+    int menor = i;
+    int esq = 2*i+1;
+    int dir = 2*i+2;
+    
+    if(esq < tamanho && arranjo[esq] < arranjo[menor]) {
+        menor = esq;
+    }
+    
+    if(dir < tamanho && arranjo[dir] < arranjo[menor]) {
+        menor = dir;
+    }
+    
+    if(menor != i) {
+        troca(&arranjo[i], &arranjo[menor]);
+        minHeapify(arranjo, tamanho, menor);
+    }
+}
+
+void construirHeap(int* vetor, int tamanho) {
+    for(int i = (tamanho-1)/2; i>=0; i--) {
+        minHeapify(vetor, tamanho, i);
+    }
+}
+
+int maiorElemento(int vetor[], int n, int k) {
+    if (k > n || k <= 0) return -1;
+    
+    int *vet = (int*)malloc(k * sizeof(int));
+    for (int i = 0; i < k; i++) {
+        vet[i] = vetor[i];
+    }
+    construirHeap(vet, k);
+
+    for (int i = k; i < n; i++) {
+        if (vetor[i] > vet[0]) {
+            vet[0] = vetor[i];
+            minHeapify(vet, k, 0);
+        }
+    }
+    int resultado = vet[0];
+    free(vet);
+    return resultado;
+}
+
+void imprimirVetor(int arranjo[], int tamanho) {
+    for(int i=0; i<tamanho; i++) {
+        printf("%d", arranjo[i]);
+        if(i<tamanho-1) printf(" - ");
+    }
+    printf("\n");
+}
