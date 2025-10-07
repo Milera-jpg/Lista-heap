@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void troca(int* a, int*b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void minHeapify(int vetor[], int tamanho, int i){
+    int menor = i;
+    int esquerda = 2*i+1;
+    int direita = 2*i+2;
+    
+    if(esquerda < tamanho && vetor[esquerda] < vetor[menor]){
+        menor = esquerda;
+    }
+    
+    if(direita < tamanho && vetor[direita] < vetor[menor]){
+        menor = direita;
+    }
+    
+    if(menor!=i){
+        troca(&vetor[i], &vetor[menor]);
+        minHeapify(vetor, tamanho, menor);
+    }
+    
+}
+
+void construirHeap(int vetor[], int tamanho){
+    for (int i = tamanho / 2 - 1; i >= 0; i--)
+        minHeapify(vetor, tamanho, i);
+}
+
+void ordenarMinHeap(int vetor[], int tamanho) {
+    if (tamanho <= 0) return;
+    
+    construirHeap(vetor, tamanho);
+    
+    for (int i = tamanho - 1; i > 0; i--) {
+        troca(&vetor[0], &vetor[i]);
+        minHeapify(vetor, i, 0);
+    }
+    
+    for (int i = 0; i < tamanho / 2; i++) {
+        troca(&vetor[i], &vetor[tamanho - 1 - i]);
+    }
+}
+
+void imprimirVetor(int arr[], int n) {
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
