@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+bool ehHeapMax(int vetor[], int tamanho){
+    
+    for(int i= 0; i<tamanho; i++)
+    {
+        int esquerda = 2*i+1;
+        int direita = 2*i+2;
+    
+        if ((esquerda < tamanho && vetor[i] < vetor[esquerda]) || (direita < tamanho && vetor[i] < vetor[direita]))
+            return false;
+    }
+    return true;    
+}
+
+void imprimirVetor(int arr[], int n) {
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+}
